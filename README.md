@@ -13,13 +13,44 @@ A Model Context Protocol (MCP) server implementation for Dropbox integration, wr
 
 ## Prerequisites
 
-- Go 1.21 or higher
 - A Dropbox account
 - Claude Desktop application
+- Go 1.21 or higher (only for building from source)
 
 ## Installation
 
-### 1. Clone and Build
+### Option 1: Install with Homebrew (macOS/Linux)
+
+```bash
+brew tap ngs/tap
+brew install dropbox-mcp
+```
+
+### Option 2: Install with Go
+
+```bash
+go install go.ngs.io/dropbox-mcp@latest
+```
+
+### Option 3: Download Pre-built Binary
+
+Download the latest release for your platform from the [releases page](https://github.com/ngs/dropbox-mcp/releases).
+
+```bash
+# Example for macOS (Apple Silicon)
+curl -L https://github.com/ngs/dropbox-mcp/releases/latest/download/dropbox-mcp_darwin_arm64.tar.gz | tar xz
+sudo mv dropbox-mcp /usr/local/bin/
+
+# Example for macOS (Intel)
+curl -L https://github.com/ngs/dropbox-mcp/releases/latest/download/dropbox-mcp_darwin_amd64.tar.gz | tar xz
+sudo mv dropbox-mcp /usr/local/bin/
+
+# Example for Linux (x86_64)
+curl -L https://github.com/ngs/dropbox-mcp/releases/latest/download/dropbox-mcp_linux_amd64.tar.gz | tar xz
+sudo mv dropbox-mcp /usr/local/bin/
+```
+
+### Option 4: Build from Source
 
 ```bash
 git clone https://github.com/ngs/dropbox-mcp.git
@@ -27,7 +58,9 @@ cd dropbox-mcp
 go build -o dropbox-mcp
 ```
 
-### 2. Create a Dropbox App
+## Setup
+
+### 1. Create a Dropbox App
 
 1. Go to [Dropbox App Console](https://www.dropbox.com/developers/apps)
 2. Click "Create app"
@@ -46,7 +79,7 @@ go build -o dropbox-mcp
    - `sharing.read` - View your shared files and folders
    - `sharing.write` - Create and modify your shared files and folders
 
-### 3. Configure Claude Desktop
+### 2. Configure Claude Desktop
 
 Add the following to your Claude Desktop configuration file:
 
@@ -58,7 +91,7 @@ Add the following to your Claude Desktop configuration file:
 {
   "mcpServers": {
     "dropbox": {
-      "command": "/path/to/dropbox-mcp",
+      "command": "dropbox-mcp",
       "env": {
         "DROPBOX_CLIENT_ID": "your_app_key_here",
         "DROPBOX_CLIENT_SECRET": "your_app_secret_here"
@@ -68,7 +101,9 @@ Add the following to your Claude Desktop configuration file:
 }
 ```
 
-Replace `/path/to/dropbox-mcp` with the actual path to your built binary.
+**Note**: 
+- If you installed via Homebrew or placed the binary in `/usr/local/bin`, you can use just `"command": "dropbox-mcp"`
+- If you built from source or downloaded to a custom location, use the full path: `"command": "/path/to/dropbox-mcp"`
 
 ## Usage
 
