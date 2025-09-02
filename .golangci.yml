@@ -1,0 +1,106 @@
+# This file contains configuration for golangci-lint
+# Run `golangci-lint run` to use it
+
+run:
+  timeout: 5m
+  tests: true
+
+linters:
+  enable:
+    - bodyclose
+    - dogsled
+    - dupl
+    - errcheck
+    - exhaustive
+    - gochecknoinits
+    - goconst
+    - gocritic
+    - gocyclo
+    - gofmt
+    - goimports
+    - gosec
+    - gosimple
+    - govet
+    - ineffassign
+    - lll
+    - misspell
+    - nakedret
+    - noctx
+    - nolintlint
+    - rowserrcheck
+    - staticcheck
+    - stylecheck
+    - typecheck
+    - unconvert
+    - unparam
+    - unused
+    - whitespace
+    - prealloc
+
+  disable:
+    - gochecknoglobals
+    - godox
+    - godot
+    - err113
+    - testpackage
+    - wsl
+    - funlen
+    - wrapcheck
+    - nlreturn
+
+linters-settings:
+  gocyclo:
+    min-complexity: 15
+
+  goconst:
+    min-len: 2
+    min-occurrences: 2
+
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+    disabled-checks:
+      - dupImport
+      - commentedOutCode
+
+  govet:
+    enable:
+      - shadow
+
+  lll:
+    line-length: 140
+
+  misspell:
+    locale: US
+
+  nolintlint:
+    allow-leading-space: true
+    allow-unused: false
+    require-explanation: false
+    require-specific: false
+
+  errcheck:
+    check-type-assertions: true
+    check-blank: true
+
+issues:
+  exclude-dirs:
+    - vendor
+
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - gosec
+        - dupl
+        - gocyclo
+        - errcheck
+
+    - path: main\.go
+      text: "Magic number"
+
+  max-issues-per-linter: 0
+  max-same-issues: 0
