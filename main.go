@@ -48,7 +48,7 @@ func main() {
 
 	for scanner.Scan() {
 		line := scanner.Bytes()
-		
+
 		var req Request
 		if err := json.Unmarshal(line, &req); err != nil {
 			fmt.Fprintf(os.Stderr, "Failed to parse request: %v\n", err)
@@ -401,43 +401,28 @@ func handleToolCall(handler *handlers.Handler, params json.RawMessage) interface
 		}
 	}
 
-	var result interface{}
-	var err error
+	// Map of tool names to handler functions
+	toolHandlers := map[string]func(json.RawMessage) (interface{}, error){
+		"dropbox_auth":               handler.HandleAuth,
+		"dropbox_check_auth":         handler.HandleCheckAuth,
+		"dropbox_list":               handler.HandleList,
+		"dropbox_search":             handler.HandleSearch,
+		"dropbox_get_metadata":       handler.HandleGetMetadata,
+		"dropbox_download":           handler.HandleDownload,
+		"dropbox_upload":             handler.HandleUpload,
+		"dropbox_create_folder":      handler.HandleCreateFolder,
+		"dropbox_move":               handler.HandleMove,
+		"dropbox_copy":               handler.HandleCopy,
+		"dropbox_delete":             handler.HandleDelete,
+		"dropbox_create_shared_link": handler.HandleCreateSharedLink,
+		"dropbox_list_shared_links":  handler.HandleListSharedLinks,
+		"dropbox_revoke_shared_link": handler.HandleRevokeSharedLink,
+		"dropbox_get_revisions":      handler.HandleGetRevisions,
+		"dropbox_restore_file":       handler.HandleRestoreFile,
+	}
 
-	switch toolCall.Name {
-	case "dropbox_auth":
-		result, err = handler.HandleAuth(toolCall.Arguments)
-	case "dropbox_check_auth":
-		result, err = handler.HandleCheckAuth(toolCall.Arguments)
-	case "dropbox_list":
-		result, err = handler.HandleList(toolCall.Arguments)
-	case "dropbox_search":
-		result, err = handler.HandleSearch(toolCall.Arguments)
-	case "dropbox_get_metadata":
-		result, err = handler.HandleGetMetadata(toolCall.Arguments)
-	case "dropbox_download":
-		result, err = handler.HandleDownload(toolCall.Arguments)
-	case "dropbox_upload":
-		result, err = handler.HandleUpload(toolCall.Arguments)
-	case "dropbox_create_folder":
-		result, err = handler.HandleCreateFolder(toolCall.Arguments)
-	case "dropbox_move":
-		result, err = handler.HandleMove(toolCall.Arguments)
-	case "dropbox_copy":
-		result, err = handler.HandleCopy(toolCall.Arguments)
-	case "dropbox_delete":
-		result, err = handler.HandleDelete(toolCall.Arguments)
-	case "dropbox_create_shared_link":
-		result, err = handler.HandleCreateSharedLink(toolCall.Arguments)
-	case "dropbox_list_shared_links":
-		result, err = handler.HandleListSharedLinks(toolCall.Arguments)
-	case "dropbox_revoke_shared_link":
-		result, err = handler.HandleRevokeSharedLink(toolCall.Arguments)
-	case "dropbox_get_revisions":
-		result, err = handler.HandleGetRevisions(toolCall.Arguments)
-	case "dropbox_restore_file":
-		result, err = handler.HandleRestoreFile(toolCall.Arguments)
-	default:
+	handlerFunc, exists := toolHandlers[toolCall.Name]
+	if !exists {
 		return map[string]interface{}{
 			"error": map[string]interface{}{
 				"code":    -32601,
@@ -445,6 +430,8 @@ func handleToolCall(handler *handlers.Handler, params json.RawMessage) interface
 			},
 		}
 	}
+
+	result, err := handlerFunc(toolCall.Arguments)
 
 	if err != nil {
 		return map[string]interface{}{
