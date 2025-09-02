@@ -3,12 +3,19 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"os"
 	"strings"
 
 	"go.ngs.io/dropbox-mcp/internal/handlers"
+)
+
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
 )
 
 type Request struct {
@@ -37,6 +44,30 @@ type ToolDefinition struct {
 }
 
 func main() {
+	var (
+		versionFlag = flag.Bool("version", false, "Print version information")
+		helpFlag    = flag.Bool("h", false, "Print help message")
+		help2Flag   = flag.Bool("help", false, "Print help message")
+	)
+	flag.Parse()
+
+	if *versionFlag {
+		fmt.Printf("dropbox-mcp version %s (commit: %s, built: %s)\n", version, commit, date)
+		os.Exit(0)
+	}
+
+	if *helpFlag || *help2Flag {
+		fmt.Println("dropbox-mcp - MCP server for Dropbox integration")
+		fmt.Println("\nUsage:")
+		fmt.Println("  dropbox-mcp [options]")
+		fmt.Println("\nOptions:")
+		fmt.Println("  -h, --help     Show this help message")
+		fmt.Println("  --version      Show version information")
+		fmt.Println("\nThis tool is designed to be used with Claude Desktop.")
+		fmt.Println("See https://github.com/ngs/dropbox-mcp for more information.")
+		os.Exit(0)
+	}
+
 	handler, err := handlers.NewHandler()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Failed to initialize handler: %v\n", err)
