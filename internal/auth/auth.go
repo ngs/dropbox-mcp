@@ -15,7 +15,7 @@ import (
 
 const (
 	AuthorizeURL = "https://www.dropbox.com/oauth2/authorize"
-	TokenURL     = "https://api.dropboxapi.com/oauth2/token"
+	TokenURL     = "https://api.dropboxapi.com/oauth2/token" // #nosec G101 - This is a URL, not a credential
 )
 
 type OAuthConfig struct {
@@ -72,6 +72,7 @@ func StartOAuthFlow(config OAuthConfig) (*AuthResult, error) {
 	errorChan := make(chan error, 1)
 
 	server := &http.Server{
+		ReadHeaderTimeout: 10 * time.Second,
 		Handler: http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			if r.URL.Path != "/callback" {
 				http.NotFound(w, r)
@@ -182,7 +183,8 @@ func RefreshToken(config OAuthConfig, refreshToken string) (*AuthResult, error) 
 }
 
 func ValidateToken(accessToken string) error {
-	req, err := http.NewRequest("POST", "https://api.dropboxapi.com/2/check/user", nil)
+	ctx := context.Background()
+	req, err := http.NewRequestWithContext(ctx, "POST", "https://api.dropboxapi.com/2/check/user", http.NoBody)
 	if err != nil {
 		return err
 	}
