@@ -81,6 +81,24 @@ go build -o dropbox-mcp
 
 ### 2. Configure Claude Desktop
 
+#### Option A: Using Claude MCP CLI (Recommended)
+
+If you have Claude MCP CLI installed, you can register the server with a single command:
+
+```bash
+# Basic registration
+claude mcp add dropbox dropbox-mcp \
+  --env DROPBOX_CLIENT_ID=your_app_key_here \
+  --env DROPBOX_CLIENT_SECRET=your_app_secret_here
+
+# With custom binary path
+claude mcp add dropbox /path/to/dropbox-mcp \
+  --env DROPBOX_CLIENT_ID=your_app_key_here \
+  --env DROPBOX_CLIENT_SECRET=your_app_secret_here
+```
+
+#### Option B: Manual Configuration
+
 Add the following to your Claude Desktop configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
@@ -104,6 +122,18 @@ Add the following to your Claude Desktop configuration file:
 **Note**: 
 - If you installed via Homebrew or placed the binary in `/usr/local/bin`, you can use just `"command": "dropbox-mcp"`
 - If you built from source or downloaded to a custom location, use the full path: `"command": "/path/to/dropbox-mcp"`
+
+### 3. Verify Installation
+
+After configuration, restart Claude Desktop and verify the server is connected:
+
+```bash
+# List registered MCP servers (if using Claude MCP CLI)
+claude mcp list
+
+# Remove a server if needed
+claude mcp remove dropbox
+```
 
 ## Usage
 
