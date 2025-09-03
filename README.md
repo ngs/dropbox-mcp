@@ -60,6 +60,10 @@ go build -o dropbox-mcp
 
 ## Setup
 
+### ⚠️ Security Notice
+
+**IMPORTANT**: Each user must create their own Dropbox App. Never share or embed CLIENT_SECRET in binaries. See [SECURITY.md](SECURITY.md) for details.
+
 ### 1. Create a Dropbox App
 
 1. Go to [Dropbox App Console](https://www.dropbox.com/developers/apps)
@@ -86,16 +90,18 @@ go build -o dropbox-mcp
 If you have Claude MCP CLI installed, you can register the server with a single command:
 
 ```bash
-# Basic registration
+# Basic registration (replace with YOUR OWN App credentials)
 claude mcp add dropbox dropbox-mcp \
-  --env DROPBOX_CLIENT_ID=your_app_key_here \
-  --env DROPBOX_CLIENT_SECRET=your_app_secret_here
+  --env DROPBOX_CLIENT_ID=your_own_app_key \
+  --env DROPBOX_CLIENT_SECRET=your_own_app_secret
 
 # With custom binary path
 claude mcp add dropbox /path/to/dropbox-mcp \
-  --env DROPBOX_CLIENT_ID=your_app_key_here \
-  --env DROPBOX_CLIENT_SECRET=your_app_secret_here
+  --env DROPBOX_CLIENT_ID=your_own_app_key \
+  --env DROPBOX_CLIENT_SECRET=your_own_app_secret
 ```
+
+⚠️ **Security**: Use credentials from YOUR OWN Dropbox App. Never use shared credentials.
 
 #### Option B: Manual Configuration
 
