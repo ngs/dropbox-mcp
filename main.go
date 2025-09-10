@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"go.ngs.io/dropbox-mcp/internal/handlers"
+	"go.ngs.io/dropbox-mcp-server/internal/handlers"
 )
 
 var (
@@ -52,19 +52,19 @@ func main() {
 	flag.Parse()
 
 	if *versionFlag {
-		fmt.Printf("dropbox-mcp version %s (commit: %s, built: %s)\n", version, commit, date)
+		fmt.Printf("dropbox-mcp-server version %s (commit: %s, built: %s)\n", version, commit, date)
 		os.Exit(0)
 	}
 
 	if *helpFlag || *help2Flag {
-		fmt.Println("dropbox-mcp - MCP server for Dropbox integration")
+		fmt.Println("dropbox-mcp-server - MCP server for Dropbox integration")
 		fmt.Println("\nUsage:")
-		fmt.Println("  dropbox-mcp [options]")
+		fmt.Println("  dropbox-mcp-server [options]")
 		fmt.Println("\nOptions:")
 		fmt.Println("  -h, --help     Show this help message")
 		fmt.Println("  --version      Show version information")
 		fmt.Println("\nThis tool is designed to be used with Claude Desktop.")
-		fmt.Println("See https://github.com/ngs/dropbox-mcp for more information.")
+		fmt.Println("See https://github.com/ngs/dropbox-mcp-server for more information.")
 		os.Exit(0)
 	}
 
@@ -142,8 +142,8 @@ func handleInitialize() interface{} {
 			"tools": map[string]interface{}{},
 		},
 		"serverInfo": map[string]interface{}{
-			"name":    "dropbox-mcp",
-			"version": "1.0.0",
+			"name":    "dropbox-mcp-server",
+			"version": VERSION,
 		},
 	}
 }

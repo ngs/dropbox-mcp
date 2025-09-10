@@ -1,5 +1,5 @@
 {
-  "name": "dropbox-mcp",
+  "name": "dropbox-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for Dropbox integration",
   "author": "Atsushi Nagase",

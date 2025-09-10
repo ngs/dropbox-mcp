@@ -97,8 +97,8 @@ jobs:
         run: go build -v ./...
 
       - name: Build CLI tool
-        run: go build -v -o dropbox-mcp${{ matrix.os == 'windows-latest' && '.exe' || '' }} .
+        run: go build -v -o dropbox-mcp-server${{ matrix.os == 'windows-latest' && '.exe' || '' }} .
 
       - name: Verify binary
-        run: ./dropbox-mcp${{ matrix.os == 'windows-latest' && '.exe' || '' }} -h || true
+        run: ./dropbox-mcp-server${{ matrix.os == 'windows-latest' && '.exe' || '' }} -h || true
         shell: bash

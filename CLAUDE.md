@@ -5,7 +5,7 @@ This is a Model Context Protocol (MCP) server for Dropbox integration, written i
 
 ## Project Structure
 ```
-dropbox-mcp/
+dropbox-mcp-server/
 ├── main.go                 # MCP server implementation with stdio transport
 ├── go.mod                  # Go module definition
 ├── internal/
@@ -23,7 +23,7 @@ dropbox-mcp/
 - Implements OAuth 2.0 browser-based flow
 - Opens local HTTP server to receive callback
 - Handles token refresh automatically
-- Stores tokens in `~/.dropbox-mcp/config.json`
+- Stores tokens in `~/.dropbox-mcp-server/config.json`
 
 ### MCP Protocol (main.go)
 - Uses stdio transport for communication
@@ -72,7 +72,7 @@ dropbox-mcp/
 
 ### Build
 ```bash
-go build -o dropbox-mcp
+go build -o dropbox-mcp-server
 ```
 
 ### Run Tests
@@ -83,7 +83,7 @@ go test ./...
 ### Manual Testing
 ```bash
 # Test with direct stdio
-echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{}}}' | ./dropbox-mcp
+echo '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{}}}' | ./dropbox-mcp-server
 
 # Check logs in Claude Desktop
 tail -f ~/Library/Logs/Claude/mcp-server-dropbox.log
@@ -96,7 +96,7 @@ tail -f ~/Library/Logs/Claude/mcp-server-dropbox.log
 - `DROPBOX_CLIENT_SECRET` - Dropbox App secret
 
 ### Config File
-Location: `~/.dropbox-mcp/config.json`
+Location: `~/.dropbox-mcp-server/config.json`
 ```json
 {
   "client_id": "...",

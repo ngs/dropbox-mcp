@@ -23,39 +23,39 @@ A Model Context Protocol (MCP) server implementation for Dropbox integration, wr
 
 ```bash
 brew tap ngs/tap
-brew install dropbox-mcp
+brew install dropbox-mcp-server
 ```
 
 ### Option 2: Install with Go
 
 ```bash
-go install go.ngs.io/dropbox-mcp@latest
+go install go.ngs.io/dropbox-mcp-server@latest
 ```
 
 ### Option 3: Download Pre-built Binary
 
-Download the latest release for your platform from the [releases page](https://github.com/ngs/dropbox-mcp/releases).
+Download the latest release for your platform from the [releases page](https://github.com/ngs/dropbox-mcp-server/releases).
 
 ```bash
 # Example for macOS (Apple Silicon)
-curl -L https://github.com/ngs/dropbox-mcp/releases/latest/download/dropbox-mcp_darwin_arm64.tar.gz | tar xz
-sudo mv dropbox-mcp /usr/local/bin/
+curl -L https://github.com/ngs/dropbox-mcp-server/releases/latest/download/dropbox-mcp-server_darwin_arm64.tar.gz | tar xz
+sudo mv dropbox-mcp-server /usr/local/bin/
 
 # Example for macOS (Intel)
-curl -L https://github.com/ngs/dropbox-mcp/releases/latest/download/dropbox-mcp_darwin_amd64.tar.gz | tar xz
-sudo mv dropbox-mcp /usr/local/bin/
+curl -L https://github.com/ngs/dropbox-mcp-server/releases/latest/download/dropbox-mcp-server_darwin_amd64.tar.gz | tar xz
+sudo mv dropbox-mcp-server /usr/local/bin/
 
 # Example for Linux (x86_64)
-curl -L https://github.com/ngs/dropbox-mcp/releases/latest/download/dropbox-mcp_linux_amd64.tar.gz | tar xz
-sudo mv dropbox-mcp /usr/local/bin/
+curl -L https://github.com/ngs/dropbox-mcp-server/releases/latest/download/dropbox-mcp-server_linux_amd64.tar.gz | tar xz
+sudo mv dropbox-mcp-server /usr/local/bin/
 ```
 
 ### Option 4: Build from Source
 
 ```bash
-git clone https://github.com/ngs/dropbox-mcp.git
-cd dropbox-mcp
-go build -o dropbox-mcp
+git clone https://github.com/ngs/dropbox-mcp-server.git
+cd dropbox-mcp-server
+go build -o dropbox-mcp-server
 ```
 
 ## Setup
@@ -91,12 +91,12 @@ If you have Claude MCP CLI installed, you can register the server with a single 
 
 ```bash
 # Basic registration (replace with YOUR OWN App credentials)
-claude mcp add dropbox dropbox-mcp \
+claude mcp add dropbox dropbox-mcp-server \
   --env DROPBOX_CLIENT_ID=your_own_app_key \
   --env DROPBOX_CLIENT_SECRET=your_own_app_secret
 
 # With custom binary path
-claude mcp add dropbox /path/to/dropbox-mcp \
+claude mcp add dropbox /path/to/dropbox-mcp-server \
   --env DROPBOX_CLIENT_ID=your_own_app_key \
   --env DROPBOX_CLIENT_SECRET=your_own_app_secret
 ```
@@ -115,7 +115,7 @@ Add the following to your Claude Desktop configuration file:
 {
   "mcpServers": {
     "dropbox": {
-      "command": "dropbox-mcp",
+      "command": "dropbox-mcp-server",
       "env": {
         "DROPBOX_CLIENT_ID": "your_app_key_here",
         "DROPBOX_CLIENT_SECRET": "your_app_secret_here"
@@ -126,8 +126,8 @@ Add the following to your Claude Desktop configuration file:
 ```
 
 **Note**: 
-- If you installed via Homebrew or placed the binary in `/usr/local/bin`, you can use just `"command": "dropbox-mcp"`
-- If you built from source or downloaded to a custom location, use the full path: `"command": "/path/to/dropbox-mcp"`
+- If you installed via Homebrew or placed the binary in `/usr/local/bin`, you can use just `"command": "dropbox-mcp-server"`
+- If you built from source or downloaded to a custom location, use the full path: `"command": "/path/to/dropbox-mcp-server"`
 
 ### 3. Verify Installation
 
@@ -151,7 +151,7 @@ When you first use the Dropbox MCP server in Claude:
 2. Your browser will open to Dropbox's authorization page
 3. Log in and authorize the app
 4. You'll be redirected to a success page
-5. The authentication token will be saved to `~/.dropbox-mcp/config.json`
+5. The authentication token will be saved to `~/.dropbox-mcp-server/config.json`
 
 ### Available Tools
 
@@ -192,7 +192,7 @@ When you first use the Dropbox MCP server in Claude:
 
 ## Configuration
 
-The server stores configuration in `~/.dropbox-mcp/config.json`:
+The server stores configuration in `~/.dropbox-mcp-server/config.json`:
 
 ```json
 {
@@ -218,7 +218,7 @@ Tokens are automatically refreshed when they expire.
 ### Authentication Issues
 - Ensure redirect URI is correctly configured in Dropbox App Console
 - Check that client ID and secret are correct
-- Try deleting `~/.dropbox-mcp/config.json` and re-authenticating
+- Try deleting `~/.dropbox-mcp-server/config.json` and re-authenticating
 
 ### Permission Errors
 - Verify your Dropbox app has the required scopes enabled
@@ -235,7 +235,7 @@ Tokens are automatically refreshed when they expire.
 
 ```bash
 go mod download
-go build -o dropbox-mcp
+go build -o dropbox-mcp-server
 ```
 
 ### Running Tests
@@ -247,7 +247,7 @@ go test ./...
 ### Project Structure
 
 ```
-dropbox-mcp/
+dropbox-mcp-server/
 ├── main.go                 # MCP server implementation
 ├── go.mod                  # Go module definition
 ├── internal/

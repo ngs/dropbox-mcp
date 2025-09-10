@@ -9,9 +9,9 @@ import (
 
 	"github.com/dropbox/dropbox-sdk-go-unofficial/v6/dropbox/files"
 	"github.com/dropbox/dropbox-sdk-go-unofficial/v6/dropbox/sharing"
-	"go.ngs.io/dropbox-mcp/internal/auth"
-	"go.ngs.io/dropbox-mcp/internal/config"
-	"go.ngs.io/dropbox-mcp/internal/dropbox"
+	"go.ngs.io/dropbox-mcp-server/internal/auth"
+	"go.ngs.io/dropbox-mcp-server/internal/config"
+	"go.ngs.io/dropbox-mcp-server/internal/dropbox"
 )
 
 const (
