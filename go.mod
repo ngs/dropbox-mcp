@@ -1,4 +1,4 @@
-module go.ngs.io/dropbox-mcp
+module go.ngs.io/dropbox-mcp-server
 
 go 1.21
 

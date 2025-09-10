@@ -27,7 +27,7 @@ For public distribution without CLIENT_SECRET:
 #### 3. Configuration File with Proper Permissions
 Store credentials in a protected config file:
 ```bash
-chmod 600 ~/.dropbox-mcp/config.json
+chmod 600 ~/.dropbox-mcp-server/config.json
 ```
 
 ### For Developers

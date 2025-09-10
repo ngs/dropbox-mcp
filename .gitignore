@@ -4,7 +4,7 @@
 *.dll
 *.so
 *.dylib
-dropbox-mcp
+dropbox-mcp-server
 
 # Test binary, built with `go test -c`
 *.test

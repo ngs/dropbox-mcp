@@ -1,6 +1,6 @@
 # This is an example .goreleaser.yml file with some sensible defaults.
 # Make sure to check the documentation at https://goreleaser.com
-project_name: dropbox-mcp
+project_name: dropbox-mcp-server
 
 before:
   hooks:
@@ -9,7 +9,7 @@ before:
 
 builds:
   - main: .
-    binary: dropbox-mcp
+    binary: dropbox-mcp-server
     env:
       - CGO_ENABLED=0
     goos:
@@ -72,7 +72,7 @@ changelog:
 release:
   github:
     owner: ngs
-    name: dropbox-mcp
+    name: dropbox-mcp-server
   draft: false
   prerelease: auto
   name_template: "{{.ProjectName}} v{{.Version}}"
@@ -84,15 +84,15 @@ brews:
       name: homebrew-tap
       branch: main
     directory: Formula
-    homepage: https://github.com/ngs/dropbox-mcp
+    homepage: https://github.com/ngs/dropbox-mcp-server
     description: "MCP server for Dropbox integration"
     license: MIT
     test: |
-      system "#{bin}/dropbox-mcp -h"
+      system "#{bin}/dropbox-mcp-server -h"
 
 nfpms:
   - file_name_template: "{{ .ProjectName }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
-    homepage: https://github.com/ngs/dropbox-mcp
+    homepage: https://github.com/ngs/dropbox-mcp-server
     description: "MCP server for Dropbox integration"
     maintainer: Atsushi Nagase <a@ngs.io>
     license: MIT

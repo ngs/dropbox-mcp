@@ -21,7 +21,7 @@ func GetConfigPath() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("failed to get home directory: %w", err)
 	}
-	return filepath.Join(homeDir, ".dropbox-mcp", "config.json"), nil
+	return filepath.Join(homeDir, ".dropbox-mcp-server", "config.json"), nil
 }
 
 func Load() (*Config, error) {
